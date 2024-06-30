@@ -1,7 +1,7 @@
 import { EmptyMaterialError } from './kering';
 
 export {};
-import libsodium from 'libsodium-wrappers-sumo';
+import libsodium from 'react-native-libsodium';
 import { Matter } from './matter';
 import { MtrDex } from './matter';
 import { Verfer } from './verfer';

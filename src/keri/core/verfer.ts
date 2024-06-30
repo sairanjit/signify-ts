@@ -1,5 +1,5 @@
 export {};
-import libsodium from 'libsodium-wrappers-sumo';
+import libsodium from 'react-native-libsodium';
 import { Matter, MatterArgs, MtrDex } from './matter';
 import secp256r1 from 'ecdsa-secp256r1';
 

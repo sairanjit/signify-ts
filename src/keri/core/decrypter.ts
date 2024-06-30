@@ -1,4 +1,4 @@
-import libsodium from 'libsodium-wrappers-sumo';
+import libsodium from 'react-native-libsodium';
 
 import { Matter, MatterArgs, MtrDex } from './matter';
 import { Signer } from './signer';
