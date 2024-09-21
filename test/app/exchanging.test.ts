@@ -2,7 +2,6 @@ import { strict as assert } from 'assert';
 import {
     b,
     d,
-    Dict,
     Diger,
     exchange,
     Ilks,
@@ -170,18 +169,21 @@ describe('exchange', () => {
         await libsodium.ready;
         const dt = '2023-08-30T17:22:54.183Z';
 
-        let [exn, end] = exchange('/multisig/vcp', {}, 'test', undefined, dt);
+        let [exn, end] = exchange('/multisig/vcp', {}, 'test', '', dt);
         assert.deepStrictEqual(exn.ked, {
-            a: {},
-            d: 'EMhxioc6Ud9b3JZ4X9o79uytSRIXXNDUf27ruwiOmNdQ',
+            a: {
+                i: '',
+            },
+            d: 'EPWm8LWxxQXmXlB8gbTZKDy7NIwXxpx49N_ZYTa5QkJV',
             dt: '2023-08-30T17:22:54.183Z',
             e: {},
             i: 'test',
             p: '',
             q: {},
             r: '/multisig/vcp',
+            rp: '',
             t: 'exn',
-            v: 'KERI10JSON0000b1_',
+            v: 'KERI10JSON0000bf_',
         });
         assert.deepStrictEqual(end, new Uint8Array());
 
@@ -231,7 +233,7 @@ describe('exchange', () => {
             b: [],
             c: [],
             a: [],
-        } as Dict<any>;
+        };
 
         const serder = new Serder(ked0);
         const siger = skp0.sign(b(serder.raw), 0);
@@ -248,19 +250,19 @@ describe('exchange', () => {
             s: '0',
             bt: toad.toString(16),
             b: [],
-        } as Dict<any>;
+        };
         const vcp = new Serder(ked1);
 
         const embeds = {
             icp: [serder, siger.qb64],
             vcp: [vcp, undefined],
-        } as Dict<any>;
+        };
 
         [exn, end] = exchange(
             '/multisig/vcp',
             {},
             'test',
-            undefined,
+            '',
             dt,
             undefined,
             undefined,
@@ -268,8 +270,10 @@ describe('exchange', () => {
         );
 
         assert.deepStrictEqual(exn.ked, {
-            a: {},
-            d: 'EHDEXQx-i0KlQ8iVnITMLa144dAb7Kjq2KDTufDUyLcm',
+            a: {
+                i: '',
+            },
+            d: 'EOK2xNjB5xlSvizCUrkFKbdF4j1nsGpvt6TR1HL0wvaY',
             dt: '2023-08-30T17:22:54.183Z',
             e: {
                 d: 'EDPWpKtMoPwro_Of8TQzpNMGdtmfyWzqTcRKQ01fGFRi',
@@ -302,8 +306,9 @@ describe('exchange', () => {
             p: '',
             q: {},
             r: '/multisig/vcp',
+            rp: '',
             t: 'exn',
-            v: 'KERI10JSON00020d_',
+            v: 'KERI10JSON00021b_',
         });
         assert.equal(
             d(end),
@@ -367,7 +372,7 @@ describe('exchange', () => {
             b: [],
             c: [],
             a: [],
-        } as Dict<any>;
+        };
 
         const serder = new Serder(ked0);
 

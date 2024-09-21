@@ -1,5 +1,5 @@
 {
-  "version": "0.2.2",
+  "version": "0.3.0",
   "license": "Apache-2.0",
   "exports": {
     ".": {
@@ -12,7 +12,8 @@
   "type": "module",
   "main": "./dist/signify-ts.cjs",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "start": "npm run build:esm -- --watch",
@@ -31,7 +32,7 @@
   "name": "signify-ts",
   "author": "Phil Feairheller",
   "devDependencies": {
-    "@mermaid-js/mermaid-cli": "^10.3.0",
+    "@mermaid-js/mermaid-cli": "^10.6.1",
     "@types/jest": "^29.5.8",
     "@types/libsodium-wrappers-sumo": "^0.7.5",
     "@types/node": "^18.11.18",
@@ -61,6 +62,11 @@
     "mathjs": "^12.4.0",
     "structured-headers": "^0.5.0",
     "react-native-libsodium": "^1.4.0"
+  },
+  "overrides": {
+    "@mermaid-js/mermaid-cli@^10.6.1": {
+      "puppeteer": "^22"
+    }
   },
   "workspaces": [
     "examples/*"
