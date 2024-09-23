@@ -1,5 +1,5 @@
 import { SignifyClient } from './clienting';
-import libsodium from 'react-native-libsodium';
+import libsodium from '../../libsodium';
 import { Salter } from '../core/salter';
 import { Matter, MtrDex } from '../core/matter';
 

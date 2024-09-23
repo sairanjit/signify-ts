@@ -2,7 +2,7 @@ import { Signer } from './signer';
 
 import { Matter, MtrDex } from './matter';
 import { EmptyMaterialError } from './kering';
-import libsodium from 'react-native-libsodium';
+import libsodium from '../../libsodium';
 
 export enum Tier {
     low = 'low',
