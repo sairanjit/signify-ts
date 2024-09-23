@@ -8,6 +8,7 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "main": "./dist/signify-ts.cjs",
   "types": "./dist/index.d.ts",
   "type": "module",
   "files": [
