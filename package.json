@@ -10,7 +10,6 @@
   },
   "types": "./dist/index.d.ts",
   "type": "module",
-  "main": "./dist/signify-ts.cjs",
   "files": [
     "dist",
     "src"
