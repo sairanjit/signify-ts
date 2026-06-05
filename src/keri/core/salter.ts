@@ -2,7 +2,7 @@ import { Signer } from './signer.ts';
 
 import { Matter, MtrDex } from './matter.ts';
 import { EmptyMaterialError } from './kering.ts';
-import libsodium from 'libsodium-wrappers-sumo';
+import { getSodium } from '../../sodium.ts';
 import { Tier } from '../../types/keria-api-schema.ts';
 export { Tier } from '../../types/keria-api-schema.ts';
 
@@ -41,8 +41,8 @@ export class Salter extends Matter {
         } catch (e) {
             if (e instanceof EmptyMaterialError) {
                 if (code == MtrDex.Salt_128) {
-                    const salt = libsodium.randombytes_buf(
-                        libsodium.crypto_pwhash_SALTBYTES
+                    const salt = getSodium().randombytes_buf(
+                        getSodium().crypto_pwhash_SALTBYTES
                     );
                     super({ raw: salt, code: code });
                 } else {
@@ -84,34 +84,34 @@ export class Salter extends Matter {
 
         // Harcoded values based on keripy
         if (temp) {
-            opslimit = 1; //libsodium.crypto_pwhash_OPSLIMIT_MIN
-            memlimit = 8192; //libsodium.crypto_pwhash_MEMLIMIT_MIN
+            opslimit = 1; //crypto_pwhash_OPSLIMIT_MIN
+            memlimit = 8192; //crypto_pwhash_MEMLIMIT_MIN
         } else {
             switch (tier) {
                 case Tier.low:
-                    opslimit = 2; //libsodium.crypto_pwhash_OPSLIMIT_INTERACTIVE
-                    memlimit = 67108864; //libsodium.crypto_pwhash_MEMLIMIT_INTERACTIVE
+                    opslimit = 2; //crypto_pwhash_OPSLIMIT_INTERACTIVE
+                    memlimit = 67108864; //crypto_pwhash_MEMLIMIT_INTERACTIVE
                     break;
                 case Tier.med:
-                    opslimit = 3; //libsodium.crypto_pwhash_OPSLIMIT_MODERATE
-                    memlimit = 268435456; //libsodium.crypto_pwhash_MEMLIMIT_MODERATE
+                    opslimit = 3; //crypto_pwhash_OPSLIMIT_MODERATE
+                    memlimit = 268435456; //crypto_pwhash_MEMLIMIT_MODERATE
                     break;
                 case Tier.high:
-                    opslimit = 4; //libsodium.crypto_pwhash_OPSLIMIT_SENSITIVE
-                    memlimit = 1073741824; //libsodium.crypto_pwhash_MEMLIMIT_SENSITIVE
+                    opslimit = 4; //crypto_pwhash_OPSLIMIT_SENSITIVE
+                    memlimit = 1073741824; //crypto_pwhash_MEMLIMIT_SENSITIVE
                     break;
                 default:
                     throw new Error(`Unsupported security tier = ${tier}.`);
             }
         }
 
-        return libsodium.crypto_pwhash(
+        return getSodium().crypto_pwhash(
             size,
             path,
             this.raw,
             opslimit,
             memlimit,
-            libsodium.crypto_pwhash_ALG_ARGON2ID13
+            getSodium().crypto_pwhash_ALG_ARGON2ID13
         );
     }
 

@@ -1,5 +1,5 @@
 import { SignifyClient } from './clienting.ts';
-import libsodium from 'libsodium-wrappers-sumo';
+import { getSodium } from '../../sodium.ts';
 import { Salter } from '../core/salter.ts';
 import { Matter, MtrDex } from '../core/matter.ts';
 import { components } from '../../types/keria-api-schema.ts';
@@ -41,7 +41,7 @@ type KeyEventRecord = components['schemas']['KeyEventRecord'];
 type AgentConfig = components['schemas']['AgentConfig'];
 
 export function randomPasscode(): string {
-    const raw = libsodium.randombytes_buf(16);
+    const raw = getSodium().randombytes_buf(16);
     const salter = new Salter({ raw: raw });
 
     // https://github.com/WebOfTrust/signify-ts/issues/242
@@ -49,7 +49,7 @@ export function randomPasscode(): string {
 }
 
 export function randomNonce(): string {
-    const seed = libsodium.randombytes_buf(libsodium.crypto_sign_SEEDBYTES);
+    const seed = getSodium().randombytes_buf(getSodium().crypto_sign_SEEDBYTES);
     const seedqb64 = new Matter({ raw: seed, code: MtrDex.Ed25519_Seed });
     return seedqb64.qb64;
 }

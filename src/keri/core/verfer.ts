@@ -1,4 +1,4 @@
-import libsodium from 'libsodium-wrappers-sumo';
+import { getSodium } from '../../sodium.ts';
 import { Matter, MatterArgs, MtrDex } from './matter.ts';
 import { p256 } from '@noble/curves/p256';
 import { b } from './core.ts';
@@ -27,7 +27,7 @@ export class Verfer extends Matter {
         switch (this.code) {
             case MtrDex.Ed25519:
             case MtrDex.Ed25519N: {
-                return libsodium.crypto_sign_verify_detached(
+                return getSodium().crypto_sign_verify_detached(
                     sig,
                     ser,
                     this.raw

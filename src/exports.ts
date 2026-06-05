@@ -1,3 +1,4 @@
+export * from './sodium.ts';
 export * from './ready.ts';
 
 export * from './keri/app/habery.ts';

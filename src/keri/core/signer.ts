@@ -1,7 +1,7 @@
 import { EmptyMaterialError } from './kering.ts';
 
 export {};
-import libsodium from 'libsodium-wrappers-sumo';
+import { getSodium } from '../../sodium.ts';
 import { Matter } from './matter.ts';
 import { MtrDex } from './matter.ts';
 import { Verfer } from './verfer.ts';
@@ -45,8 +45,8 @@ export class Signer extends Matter {
         } catch (e) {
             if (e instanceof EmptyMaterialError) {
                 if (code == MtrDex.Ed25519_Seed) {
-                    const raw = libsodium.randombytes_buf(
-                        libsodium.crypto_sign_SEEDBYTES
+                    const raw = getSodium().randombytes_buf(
+                        getSodium().crypto_sign_SEEDBYTES
                     );
                     super({ raw, code, qb64, qb64b, qb2 });
                 } else {
@@ -59,7 +59,7 @@ export class Signer extends Matter {
         let verfer;
         if (this.code == MtrDex.Ed25519_Seed) {
             this._sign = this._ed25519;
-            const keypair = libsodium.crypto_sign_seed_keypair(this.raw);
+            const keypair = getSodium().crypto_sign_seed_keypair(this.raw);
             verfer = new Verfer({
                 raw: keypair.publicKey,
                 code: transferable ? MtrDex.Ed25519 : MtrDex.Ed25519N,
@@ -97,7 +97,7 @@ export class Signer extends Matter {
         only: boolean = false,
         ondex: number | undefined
     ) {
-        const sig = libsodium.crypto_sign_detached(
+        const sig = getSodium().crypto_sign_detached(
             ser,
             concat(seed, verfer.raw)
         );

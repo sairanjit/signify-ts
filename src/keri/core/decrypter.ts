@@ -1,4 +1,4 @@
-import libsodium from 'libsodium-wrappers-sumo';
+import { getSodium } from '../../sodium.ts';
 
 import { Matter, MatterArgs, MtrDex } from './matter.ts';
 import { Signer } from './signer.ts';
@@ -29,7 +29,7 @@ export class Decrypter extends Matter {
                     sigkey.set(signer.raw);
                     sigkey.set(signer.verfer.raw, signer.raw.length);
                     raw =
-                        libsodium.crypto_sign_ed25519_sk_to_curve25519(sigkey);
+                        getSodium().crypto_sign_ed25519_sk_to_curve25519(sigkey);
                     super({ raw, code, qb64, qb64b, qb2 });
                 } else {
                     throw e;
@@ -63,8 +63,8 @@ export class Decrypter extends Matter {
     }
 
     _x25519(cipher: Cipher, prikey: Uint8Array, transferable: boolean = false) {
-        const pubkey = libsodium.crypto_scalarmult_base(prikey);
-        const plain = libsodium.crypto_box_seal_open(
+        const pubkey = getSodium().crypto_scalarmult_base(prikey);
+        const plain = getSodium().crypto_box_seal_open(
             cipher.raw,
             pubkey,
             prikey

@@ -1,4 +1,4 @@
-import libsodium from 'libsodium-wrappers-sumo';
+import { getSodium } from '../../sodium.ts';
 
 import { Matter, MatterArgs, MtrDex } from './matter.ts';
 import { Verfer } from './verfer.ts';
@@ -23,7 +23,7 @@ export class Encrypter extends Matter {
                     `Unsupported verkey derivation code = ${verfer.code}.`
                 );
             }
-            raw = libsodium.crypto_sign_ed25519_pk_to_curve25519(verfer.raw);
+            raw = getSodium().crypto_sign_ed25519_pk_to_curve25519(verfer.raw);
         }
 
         super({ raw, code, qb64, qb64b, qb2 });
@@ -37,8 +37,8 @@ export class Encrypter extends Matter {
 
     verifySeed(seed: Uint8Array) {
         const signer = new Signer({ qb64b: seed });
-        const keypair = libsodium.crypto_sign_seed_keypair(signer.raw);
-        const pubkey = libsodium.crypto_sign_ed25519_pk_to_curve25519(
+        const keypair = getSodium().crypto_sign_seed_keypair(signer.raw);
+        const pubkey = getSodium().crypto_sign_ed25519_pk_to_curve25519(
             keypair.publicKey
         );
         return arrayEquals(pubkey, this.raw);
@@ -64,7 +64,7 @@ export class Encrypter extends Matter {
     }
 
     _x25519(ser: Uint8Array, pubkey: Uint8Array, code: string) {
-        const raw = libsodium.crypto_box_seal(ser, pubkey);
+        const raw = getSodium().crypto_box_seal(ser, pubkey);
         return new Cipher({ raw: raw, code: code });
     }
 }

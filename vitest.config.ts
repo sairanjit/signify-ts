@@ -5,5 +5,6 @@ export default defineConfig({
         name: 'Unit tests',
         root: 'test',
         testTimeout: 10000,
+        setupFiles: ['./test/setup.ts'],
     },
 });
